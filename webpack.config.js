@@ -29,12 +29,12 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './app/index.ejs'
         }),
-        new CopyWebpackPlugin({
-            patterns: [
-                { from: './app/favicon.ico' },
-                { from: './app/assets', to: 'assets' }
-            ],
-        })
+        // new CopyWebpackPlugin({
+        //     patterns: [
+        //         { from: './app/favicon.ico' },
+        //         { from: './app/assets', to: 'assets' }
+        //     ],
+        // })
     ],
     devtool: 'eval'
 };

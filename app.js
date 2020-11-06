@@ -1,16 +1,25 @@
-const express = require('express');
-const logger = require('morgan');
-const path = require('path');
-const bodyParser = require('body-parser');
+const express = require('express')
+const path = require('path')
+const bodyParser = require('body-parser')
+const cors = require('cors')
+const portfinder = require('portfinder')
 
-const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+portfinder.basePort = 5010
+ 
+const app = express()
+app.use(cors())
+app.use(bodyParser.json({limit: '50mb'}))
+app.use(bodyParser.urlencoded({extended: false}))
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')))
 
-app.get('/test', (req, res) => {
-    res.send('Welcome to your express API');
-});
+app.use(require('./routes'))
 
-app.listen(5000, () => console.log('App running on port 5000 🔥'));
+portfinder.getPort((err, port) => {
+  if (!err) {
+    app.set('port', port)
+    app.listen(port) 
+  }
+})
+
+exports.App = app
